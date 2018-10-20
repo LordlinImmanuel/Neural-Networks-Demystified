@@ -88,7 +88,7 @@ if __name__ == "main":
         print nn.weightsAtOutputLayer
         
         #training the neural network
-        nn.train(X,y,10000)
+        nn.train(X,y,60000)
         
         #final weights after training
         print nn.weightsAtOutputLayer
