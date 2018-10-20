@@ -28,7 +28,7 @@ class NeuralNetwork():
         self.hiddenLayerActivation = self.nonLinearFunction(self.hiddenLayerInput,derivative=False)
         self.outputLayer = dot(self.hiddenLayerActivation, self.weightsAtOutputLayer)
     
-    def backwardPropagation(self,X,y,iteration):
+    def backPropagation(self,X,y,iteration):
         
         #error calculation
         self.errorAtOutputLayer = y - self.outputLayer
@@ -65,7 +65,7 @@ class NeuralNetwork():
     def train(self,X,y,iterations):
         for iteration in xrange(iterations):
             self.forwardPropagation(X)
-            self.backwardPropagation(X,y,iteration)
+            self.backPropagation(X,y,iteration)
         
 if __name__ == "main":
         
