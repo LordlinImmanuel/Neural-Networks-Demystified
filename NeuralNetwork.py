@@ -1,4 +1,4 @@
-from numpy import random,dot,exp,array,random,mean
+from numpy import random,dot,exp,array,mean
 
 class NeuralNetwork():
     
