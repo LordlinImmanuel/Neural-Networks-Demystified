@@ -1,6 +1,6 @@
 # Neural-Networks-Demystified
 
-This is the [code](NeuralNetworks.py) of a simple 3 layer neural network.
+This is the [code](Neural-Networks-Demystified/NeuralNetwork.py) of a simple 3 layer neural network.
 
 It is implemented in python with numpy.
 
