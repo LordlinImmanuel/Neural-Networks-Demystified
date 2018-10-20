@@ -17,7 +17,7 @@ class NeuralNetwork():
         self.learningRate = 0.1
         
     def nonLinearFunction(self,x, derivative=False):
-        #here, sigmoid derivative is used
+        #here, sigmoid function is used
         if(derivative==True):
             return x*(1-x)
         return 1/(1+exp(-x))
