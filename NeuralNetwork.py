@@ -16,6 +16,10 @@ class NeuralNetwork():
         #Fixed learning rate of 0.1
         self.learningRate = 0.1
         
+        #Initialise Hidden Layer Activation and Output Layer
+        self.hiddenLayerActivation=None
+        self.outputLayer=None
+        
     def nonLinearFunction(self,x, derivative=False):
         #here, sigmoid function is used
         if(derivative==True):
@@ -24,43 +28,43 @@ class NeuralNetwork():
     
     def forwardPropagation(self, X):
         # hidden layer input = dot_product(X and weights of hidden layer)
-        self.hiddenLayerInput = dot(X, self.weightsAtHiddenLayer)
-        self.hiddenLayerActivation = self.nonLinearFunction(self.hiddenLayerInput,derivative=False)
+        hiddenLayerInput = dot(X, self.weightsAtHiddenLayer)
+        self.hiddenLayerActivation = self.nonLinearFunction(hiddenLayerInput,derivative=False)
         self.outputLayer = dot(self.hiddenLayerActivation, self.weightsAtOutputLayer)
     
     def backPropagation(self,X,y,iteration):
         
         #error calculation
-        self.errorAtOutputLayer = y - self.outputLayer
+        errorAtOutputLayer = y - self.outputLayer
         
         #to print out the error
         if (iteration% 10000) == 0:
             print "Error in prediction:" + str(mean(abs(self.errorAtOutputLayer)))
         
         # delta_output = slope of output layer * Error(which is the error at output layer)
-        self.slopeOfOutputLayer = self.nonLinearFunction(self.outputLayer, derivative=True)
+        slopeOfOutputLayer = self.nonLinearFunction(self.outputLayer, derivative=True)
         
         # Delta at output layer
-        self.deltaOutput = self.slopeOfOutputLayer * self.errorAtOutputLayer
+        deltaOutput = slopeOfOutputLayer * errorAtOutputLayer
         
         # delta_hidden = slope of hidden layer * error at hidden layer
         
         # slope at hidden layer = nonLinearFunctionDerivative(hidden layer activation)
-        self.slopeOfHiddenLayer = self.nonLinearFunction(self.hiddenLayerActivation, derivative=True)
+        slopeOfHiddenLayer = self.nonLinearFunction(self.hiddenLayerActivation, derivative=True)
         
         # error at hidden layer = dot_product (delta_output and Transpose(weights at output layer))
-        self.errorAtHiddenLayer = dot(self.deltaOutput, self.weightsAtOutputLayer.T)
+        errorAtHiddenLayer = dot(deltaOutput, self.weightsAtOutputLayer.T)
         
         # Delta at hidden layer
-        self.deltaHidden = self.slopeOfHiddenLayer * self.errorAtHiddenLayer
+        deltaHidden = slopeOfHiddenLayer * errorAtHiddenLayer
         
         #Weights Update(the key ingredient)
         
         # weights_at_output += dot_product(Transpose(hidden layer activation) and delta_output)*learning_rate
-        self.weightsAtOutputLayer += dot(self.hiddenLayerActivation.T, self.deltaOutput) * self.learningRate
+        self.weightsAtOutputLayer += dot(self.hiddenLayerActivation.T, deltaOutput) * self.learningRate
         
         # weights_at_hidden += dot_product(Transpose(X) and delta_hidden)*learning_rate
-        self.weightsAtHiddenLayer += dot(X.T, self.deltaHidden) * self.learningRate
+        self.weightsAtHiddenLayer += dot(X.T, deltaHidden) * self.learningRate
         
     def train(self,X,y,iterations):
         for iteration in xrange(iterations):
